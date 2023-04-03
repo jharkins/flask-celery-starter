@@ -2,6 +2,24 @@
 
 This repository contains my code and resources as I work through the course "The Definitive Guide to Celery and Flask." The primary goal is to learn how to integrate Celery, an asynchronous task queue, with Flask, a Python-based web framework, for managing background tasks and improving application performance.
 
+## Commands
+
+`$ docker-compose up -d --build`
+
+Build the project and run the services.
+
+`$ docker-compose logs -f`
+
+Look at the logs for the services.
+
+`$ curl -X POST http://localhost:5010/users/webhook_test/ -d {'data':'ping'}`
+
+Test an endpoint with data from the CLI.
+
+`$ docker-compose exec celery_worker bash`
+
+Get a shell in a running container.
+
 ## About the Course
 
 I didn't write the course - I just found it online and found it useful. The book covers the basics of Celery and producer/consumer-based task queues in general. By the end of the book, the reader is expected to be able to:

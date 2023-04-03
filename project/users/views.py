@@ -6,7 +6,8 @@ from flask import Blueprint, render_template, flash, abort, request, Response, j
 
 from . import users_blueprint
 from project.users.forms import YourForm
-from project.users.tasks import sample_task
+from project.users.tasks import sample_task, task_process_notification
+from project import csrf
 
 
 def api_call(email):
@@ -48,3 +49,23 @@ def task_status():
                 'state': state,
             }
         return jsonify(response)
+
+
+@users_blueprint.route('/webhook_test/', methods=('POST', ))
+@csrf.exempt
+def webhook_test():
+    if not random.choice([0, 1]):
+        # mimic an error
+        raise Exception()
+
+    # blocking process
+    requests.post('https://httpbin.org/delay/5')
+    return 'pong'
+
+
+@users_blueprint.route('/webhook_test_async/', methods=('POST', ))
+@csrf.exempt
+def webhook_test_async():
+    task = task_process_notification.delay()
+    current_app.logger.info(task.id)
+    return 'pong'
