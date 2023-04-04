@@ -1,4 +1,7 @@
 from project import create_app, ext_celery, socketio
+import eventlet
+eventlet.monkey_patch()
+
 
 app = create_app()
 celery = ext_celery.celery
@@ -15,5 +18,4 @@ if __name__ == '__main__':
         debug=True,
         use_reloader=True,
         host='0.0.0.0',
-        allow_unsafe_werkzeug=True,
     )
