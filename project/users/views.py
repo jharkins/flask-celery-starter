@@ -23,13 +23,14 @@ def api_call(email):
 def subscribe():
     form = YourForm()
     if form.validate_on_submit():
-        task = sample_task.delay(form.email.data)
+        task = sample_task.delay(form.email.data)  # type: ignore
         return jsonify({
             'task_id': task.task_id,
         })
     return render_template('form.html', form=form)
 
 
+# type: ignore
 @users_blueprint.route('/task_status/', methods=('GET', 'POST'))
 def task_status():
     task_id = request.args.get('task_id')
@@ -66,7 +67,7 @@ def webhook_test():
 @users_blueprint.route('/webhook_test_async/', methods=('POST', ))
 @csrf.exempt
 def webhook_test_async():
-    task = task_process_notification.delay()
+    task = task_process_notification.delay()  # type: ignore
     current_app.logger.info(task.id)
     return 'pong'
 
@@ -75,7 +76,7 @@ def webhook_test_async():
 def subscribe_ws():
     form = YourForm()
     if form.validate_on_submit():
-        task = sample_task.delay(form.email.data)
+        task = sample_task.delay(form.email.data)  # type: ignore
         return jsonify({
             'task_id': task.task_id,
         })
