@@ -5,4 +5,4 @@ set -o nounset
 
 watchfiles \
   --filter python \
-  'celery -A celery_app.celery worker --loglevel=info'
+  'celery -A celery_app.celery worker --loglevel=info -Q high_priority,default'

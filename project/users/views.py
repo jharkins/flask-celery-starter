@@ -30,7 +30,6 @@ def subscribe():
     return render_template('form.html', form=form)
 
 
-# type: ignore
 @users_blueprint.route('/task_status/', methods=('GET', 'POST'))
 def task_status():
     task_id = request.args.get('task_id')
